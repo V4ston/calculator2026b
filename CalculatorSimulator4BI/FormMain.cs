@@ -12,7 +12,9 @@ using System.Windows.Forms;
 namespace CalculatorSimulator4BI
 {
     public partial class FormMain : Form
-    { 
+    {
+        private Label ResultLabel;
+
         static private Color OPERATION_BG = Color.LightGray;
         static private Color NUMBER_BG = Color.WhiteSmoke;
         static private Color EQUAL_BG = Color.LightSeaGreen;
@@ -26,6 +28,10 @@ namespace CalculatorSimulator4BI
             {
                 this.Content = content;
                 this.BgColor = bgColor;
+            }
+            public override string ToString()
+            {
+                return Content.ToString();
             }
         }
 
@@ -46,7 +52,23 @@ namespace CalculatorSimulator4BI
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            MakeResultLabel();
             MakeButtons();
+        }
+
+        private void MakeResultLabel()
+        {
+            ResultLabel = new Label()
+            {
+                Font = new Font("Segoe UI", 22, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleRight,
+                AutoSize = false,
+                Location = new Point(0,0),
+                Size = new Size(this.Width, 100),
+                BackColor = Color.Beige
+            };
+
+            Controls.Add(ResultLabel);
         }
 
         private void MakeButtons()
@@ -69,6 +91,8 @@ namespace CalculatorSimulator4BI
                     btn.Left = posX;
                     btn.Font = new Font("Segoe UI", 16);
                     btn.Text = buttons[i, j].ToString();
+                    btn.BackColor = buttons[i, j].BgColor;
+
                     btn.TabStop = false;
 
                     Controls.Add(btn);
